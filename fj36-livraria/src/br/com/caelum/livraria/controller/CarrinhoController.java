@@ -1,7 +1,5 @@
 package br.com.caelum.livraria.controller;
 
-import java.rmi.Naming;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.caelum.estoque.rmi.EstoqueRmi;
-import br.com.caelum.estoque.rmi.ItemEstoque;
 import br.com.caelum.livraria.modelo.Carrinho;
 import br.com.caelum.livraria.modelo.Formato;
-import br.com.caelum.livraria.modelo.ItemCompra;
 import br.com.caelum.livraria.modelo.Livro;
 import br.com.caelum.livraria.modelo.Pedido;
 
@@ -130,7 +125,8 @@ public class CarrinhoController{
 	
 	@RequestMapping("/listar")
 	public String listar() throws Exception {
-		this.carrinho.verificarDisponibilidadeDosItensComRmi();
+//		this.carrinho.verificarDisponibilidadeDosItensComRmi();
+		this.carrinho.verificarDisponibilidadeDosItensComSoap();
 		return JSP_CARRINHO_LISTAR;
 	}
 	
