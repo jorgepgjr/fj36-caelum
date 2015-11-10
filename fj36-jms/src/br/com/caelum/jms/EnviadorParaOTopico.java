@@ -11,6 +11,10 @@ import javax.naming.NamingException;
 
 public class EnviadorParaOTopico {
 
+	/**
+	 * @param args
+	 * @throws NamingException
+	 */
 	public static void main(String[] args) throws NamingException {
 		InitialContext ic = new InitialContext();
 		ConnectionFactory factory = (ConnectionFactory) ic.lookup("jms/RemoteConnectionFactory");

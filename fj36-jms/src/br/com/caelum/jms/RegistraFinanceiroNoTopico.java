@@ -17,7 +17,7 @@ public class RegistraFinanceiroNoTopico {
 		Topic topic = (Topic) ic.lookup("jms/TOPICO.LIVRARIA");
 		
 		try(JMSContext context = factory.createContext("jms", "jms2")){
-			context.setClientID("Financeiro");
+			context.setClientID("Financeiro-AAAA");
 			//Como não foi expecificado a property formato, esse consumer vai receber todos os itens do Topico
 			JMSConsumer consumer = context.createDurableConsumer(topic,"AssinaturaNotas");
 			consumer.setMessageListener(new TratadorDeMensagem());
