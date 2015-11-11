@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<livro>
+<ns2:livro xmlns:ns2="http://www.caelum.com.br/fj36">
     <categoria>
         <nome>TI</nome>
     </categoria>
@@ -7,4 +7,4 @@
     <nomeAutor>Paulo Silveira</nomeAutor>
     <titulo>Arquitetura Java</titulo>
     <valor>29.90</valor>
-</livro>
+</ns2:livro>
