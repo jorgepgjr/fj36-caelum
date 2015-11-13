@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pedido>
+    <data>2013-12-05T18:10:07.963-02:00</data>
+    <itens>
+        <item>
+          <formato>IMPRESSO</formato>
+            <quantidade>2</quantidade>
+            <livro>
+                <codigo>SEO</codigo>
+                <titulo>SEO Prático: Seu site na primeira página das buscas</titulo>
+                <tituloCurto>MEAN</tituloCurto>
+                <nomeAutor>Adriano Almeida</nomeAutor>
+                <valorEbook>19.90</valorEbook>
+                <valorImpresso>49.90</valorImpresso>
+            </livro>
+        </item>
+        <item>
+            <formato>EBOOK</formato>
+            <quantidade>1</quantidade>
+            <livro>
+                <codigo>ARQ</codigo>
+                <titulo>Introdução à Arquitetura e Design de Software</titulo>
+                <tituloCurto>Arquitetura Java</tituloCurto>
+                <nomeAutor>Paulo Silveira</nomeAutor>
+                <valorEbook>39.90</valorEbook>
+                <valorImpresso>79.90</valorImpresso>
+            </livro>
+        </item>
+        <item>
+            <formato>EBOOK</formato>
+            <quantidade>1</quantidade>
+            <livro>
+                <codigo>MEA</codigo>
+                <titulo>Mean: Full stack JavaScript para aplicações web com MongoDB, Express, Angular e Node</titulo>
+                <tituloCurto>MEAN</tituloCurto>
+                <nomeAutor>Flavio Almeido</nomeAutor>
+                <valorEbook>29.90</valorEbook>
+                <valorImpresso>59.90</valorImpresso>
+            </livro>
+        </item>
+    </itens>
+    <pagamento>
+        <status>CRIADO</status>
+        <valor>59.80</valor>
+    </pagamento>
+</pedido>

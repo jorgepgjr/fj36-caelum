@@ -1,0 +1,6 @@
+mysql -u root;
+create database camel;
+use camel;
+create table Livros (
+	nomeAutor TEXT
+);

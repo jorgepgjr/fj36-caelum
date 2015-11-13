@@ -1,0 +1,27 @@
+Enviando um GET pedindo JSON:
+
+
+curl -i -H "Accept: application/json" http://localhost:8080/fj36-webservice/pagamentos/1
+
+----
+
+Enviando um POST com JSON:
+
+
+curl -i -H "Content-type: application/json" -X POST -d '{"valor":"39.9","titular":"Fulano"}' http://localhost:8080/fj36-webservice/pagamentos
+
+----
+
+Enviando um PUT para o pagamento com a ID 3:
+
+
+curl -i -H "Content-type: application/json" -X PUT http://localhost:8080/fj36-webservice/pagamentos/3
+
+----
+
+Enviando um DELETE para o pagamento com a ID 3:
+
+
+curl -i -H "Content-type: application/json" -X DELETE http://localhost:8080/fj36-webservice/pagamentos/3
+
+

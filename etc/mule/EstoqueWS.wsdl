@@ -1,0 +1,63 @@
+<?xml version="1.0" ?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://caelum.com.br/estoquews/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EstoqueWSService" targetNamespace="http://caelum.com.br/estoquews/v1">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://caelum.com.br/estoquews/v1" elementFormDefault="unqualified" targetNamespace="http://caelum.com.br/estoquews/v1" version="1.0">
+
+  <xs:element name="ItensPeloCodigo" type="tns:ItensPeloCodigo"></xs:element>
+
+  <xs:element name="ItensPeloCodigoResponse" type="tns:ItensPeloCodigoResponse"></xs:element>
+
+  <xs:complexType name="ItensPeloCodigo">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="codigo" type="xs:string"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ItensPeloCodigoResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ItemEstoque" type="tns:itemEstoque"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="itemEstoque">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codigo" type="xs:string"></xs:element>
+      <xs:element minOccurs="0" name="quantidade" type="xs:int"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ItensPeloCodigoResponse">
+    <wsdl:part element="tns:ItensPeloCodigoResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ItensPeloCodigo">
+    <wsdl:part element="tns:ItensPeloCodigo" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EstoqueWS">
+    <wsdl:operation name="ItensPeloCodigo">
+      <wsdl:input message="tns:ItensPeloCodigo" name="ItensPeloCodigo">
+    </wsdl:input>
+      <wsdl:output message="tns:ItensPeloCodigoResponse" name="ItensPeloCodigoResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EstoqueWSServiceSoapBinding" type="tns:EstoqueWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="ItensPeloCodigo">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="ItensPeloCodigo">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="ItensPeloCodigoResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EstoqueWSService">
+    <wsdl:port binding="tns:EstoqueWSServiceSoapBinding" name="EstoqueWSPort">
+      <soap:address location="http://localhost:8081/fj36-webservice/EstoqueWS"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

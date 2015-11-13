@@ -1,0 +1,26 @@
+Flow Estoque Proxy:
+
+XPath Expression no MUL (Mule Expression Language) para selecionar a versão v1 pelo namespace:
+
+#[xpath3(&quot;//*[namespace-uri() = 'http://caelum.com.br/estoquews/v1']&quot;, payload, 'BOOLEAN' )]
+
+
+XPath Expression para selecionar a versão v2 pelo namespace:
+
+#[xpath3(&quot;//*[namespace-uri() = 'http://caelum.com.br/estoquews/v2']&quot;, payload, 'BOOLEAN' )]
+
+
+————
+
+Flow Pedidos:
+
+XPath Expression para dividir o XML do Pedido (splitter):
+
+#[xpath3('//item', payload, 'NODESET')]
+
+
+XPath Expression para filtrar itens do tipo EBOOK:
+
+#[xpath3("/item/formato/text() = 'EBOOK'", message.payloadAs(java.lang.String),'BOOLEAN')]
+
+
