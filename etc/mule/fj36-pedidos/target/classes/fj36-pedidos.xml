@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" version="EE-3.6.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8082" basePath="/fj36-pedidos" doc:name="HTTP Listener Configuration"/>
+    <expression-filter expression="#[xpath3(&quot;/item/formato/text() = 'EBOOK'&quot;, message.payloadAs(java.lang.String),'BOOLEAN')]" name="Expression" doc:name="Expression"/>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8089" basePath="/mule" doc:name="HTTP Request Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration1" host="localhost" port="8089" basePath="/mule" doc:name="HTTP Request Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration2" host="localhost" port="8089" basePath="/mule" doc:name="HTTP Request Configuration"/>
+    <mulexml:schema-validation-filter schemaLocations="pedido.xsd" returnResult="true" name="Schema_Validation" doc:name="Schema Validation"/>
+    <sub-flow name="financeiro_flow">
+        <mulexml:xslt-transformer xsl-file="/home/soa5710/AnypointStudio/workspace/fj36-pedidos/src/main/resources/pedido-para-soap.xslt" maxIdleTransformers="2" maxActiveTransformers="5" doc:name="XSLT"/>
+        <logger message="Financeiro: #[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+        <http:request config-ref="HTTP_Request_Configuration1" path="/financeiro" method="POST" doc:name="HTTP"/>
+    </sub-flow>
+    <sub-flow name="ebook_flow">
+        <splitter expression="#[xpath3('//item', payload, 'NODESET')]" doc:name="Splitter"/>
+        <filter ref="Expression" doc:name="Filter Reference"/>
+        <json:xml-to-json-transformer doc:name="XML to JSON"/>
+        <logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+        <http:request config-ref="HTTP_Request_Configuration1" path="/ebook" method="POST" doc:name="HTTP"/>
+    </sub-flow>
+    <flow name="fj36-pedidosFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/" allowedMethods="POST" doc:name="Pedidos Listener"/>
+        <logger message="#[message.payloadAs(java.lang.String)]" level="INFO" doc:name="Logger"/>
+        <message-filter throwOnUnaccepted="true" doc:name="Message">
+            <filter ref="Schema_Validation"/>
+        </message-filter>
+        <scatter-gather doc:name="Scatter-Gather">
+            <custom-aggregation-strategy class="br.com.caelum.aggr.SimpleResponseStrategy"/>
+            <flow-ref name="ebook_flow" doc:name="ebook_flow"/>
+            <flow-ref name="financeiro_flow" doc:name="financeiro_flow"/>
+        </scatter-gather>
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <logger message="Falha no fluxo error log" level="ERROR" doc:name="Error Logger"/>
+            <set-property propertyName="http.status" value="400" doc:name="Property"/>
+            <set-payload value="Erro: #[exception.getSummaryMessage()]" doc:name="Set Payload"/>
+        </catch-exception-strategy>
+    </flow>
+</mule>
